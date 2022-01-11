@@ -73,6 +73,9 @@ def services_annuaire(minitel, reseau):
         if menu.selection < len(options)-1:
             # Voir les paramètres du service selectionné
             choix = services_consult(minitel, annuaire[menu.selection])
+        else:
+            # Retour menu
+            choix = 2
     else:
         # Retour menu
         choix = 2
