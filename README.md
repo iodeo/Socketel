@@ -8,19 +8,28 @@ Minitel services have been officialy terminated in 2012, making these robust ter
 
 One way to connect to the websocket services is to use a microcontroller with Wifi support connected to the DIN port of the Minitel. The microcontroller connects to the WiFi and acts as a gateway between the server and the minitel.
 
-The present application provides a user interface to manage wifi connexion and call to minitel services.
+The present application provides a user interface to:
+* manage minitel speed, 
+* handle wifi connexion,
+* consult online yellow pages of available minitel services
+* consult and edit a local repertory of available services
+* connect / disconnect minitel services
+
+The application is provided as is with no warranty as per license terms
 
 # Ackonwledgments
 
-Merci à l'Association du [Musée du Minitel et de la Télématique](https://www.museeminitel.fr/) et à tous les gens qui oeuvrent à faire vivre le minitel !
+* L'Association du [Musée du Minitel et de la Télématique](https://www.museeminitel.fr/)
+* zigazou pour sa bibliothèque [PyMinitel](https://github.com/Zigazou/PyMinitel), dont l'adaptation en micropython est disponible ici [µPyMinitel](https://github.com/iodeo/Minitel-ESP32/tree/main/upython/uPyMinitel)
+* et tous les gens qui oeuvrent à faire vivre le minitel !
 
 # Requirements
 
 * ESP32 with micropython firmware v1.17 installed
 * Minitel with "periinformatique" DIN port
 
-# Screenshots 
+For ESP32 programming with Thonny IDE guidances are provided in [hackaday project instructions](https://hackaday.io/project/180473/instructions)
 
-![accueil](https://raw.githubusercontent.com/iodeo/Socketel/main/screenshots/socketel_accueil.jpg)
+# Screenshots 
 
 ![menu](https://raw.githubusercontent.com/iodeo/Socketel/main/screenshots/socketel_menu.jpg)
