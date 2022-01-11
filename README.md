@@ -32,4 +32,7 @@ For ESP32 programming with Thonny IDE guidances are provided in [hackaday projec
 
 # Screenshots 
 
+![accueil](https://raw.githubusercontent.com/iodeo/Socketel/main/screenshots/socketel_accueil.jpg)
 ![menu](https://raw.githubusercontent.com/iodeo/Socketel/main/screenshots/socketel_menu.jpg)
+![annuaire personnel](https://raw.githubusercontent.com/iodeo/Socketel/main/screenshots/socketel_annu.jpg)
+
