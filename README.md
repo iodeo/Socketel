@@ -11,7 +11,7 @@ One way to connect to the websocket services is to use a microcontroller with Wi
 The present application provides a user interface to:
 * manage minitel speed, 
 * handle wifi connexion,
-* consult online yellow pages of available minitel services
+* consult online yellow pages of available minitel services (yp url can be changed in the ui)
 * consult and edit a local repertory of available services
 * connect / disconnect minitel services
 
