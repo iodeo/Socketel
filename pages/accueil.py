@@ -38,7 +38,7 @@ def accueil(minitel):
     
     minitel.position(1,0)
     minitel.couleur(caractere = 'bleu')
-    minitel.envoyer('github.com/iodeo')
+    minitel.envoyer('github.com/iodeo/socketel')
 
     touche = minitel.recevoir_sequence()
     while (not touche.egale(ENVOI)):
