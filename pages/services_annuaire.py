@@ -29,6 +29,7 @@ def services_annuaire(minitel, reseau):
     # On verifie que la connexion wifi est établie
     if not reseau.isconnected():
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('WiFi déconnecté !            ')
         return False
 
@@ -85,15 +86,18 @@ def services_annuaire(minitel, reseau):
         # Se connecter au service
         services_connect(minitel, reseau, annuaire[menu.selection])
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('Déconnexion du service...    ')
     elif choix == 1:
         # Ajouter service dans l'annuaire personnel
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('Ajout du service...          ')
         ajouter_service(annuaire[menu.selection])
     elif choix == 2:
         # Retourner menu
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('Retour au menu...            ')
 
     return True

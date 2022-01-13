@@ -21,6 +21,13 @@ def wifi_choixdureseau(minitel, reseau):
     minitel.effet(inversion=True)
     minitel.envoyer("Réseaux disponibles")
 
+    # on affiche le pied de page
+    minitel.position(17,24)
+    minitel.couleur(caractere='vert')
+    minitel.envoyer('Retour au menu: ')
+    minitel.effet(inversion = True)
+    minitel.envoyer('SOMMAIRE')
+
     # On scanne les réseaux 
     reseaux = reseau.scan()
 
@@ -66,9 +73,11 @@ def wifi_choixdureseau(minitel, reseau):
         if menu.selection != i:
             reseau.nom = options[menu.selection]
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Choix réseau enregistré...        ')
     else:
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('Retour au menu...            ')
 
     return True

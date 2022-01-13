@@ -25,6 +25,13 @@ def wifi_motdepasse(minitel, reseau):
     minitel.couleur(caractere = 'bleu')
     minitel.envoyer('Clavier en mode minuscule')
 
+    # on affiche le pied de page
+    minitel.position(17,24)
+    minitel.couleur(caractere='vert')
+    minitel.envoyer('Retour au menu: ')
+    minitel.effet(inversion = True)
+    minitel.envoyer('SOMMAIRE')
+
     # on affiche le champ de saisie du mot de passe
     champ = ChampTexte(minitel, 10, 9, 30, 60, valeur = reseau.mdp,
                        champ_cache = reseau.masque_mdp)
@@ -36,9 +43,11 @@ def wifi_motdepasse(minitel, reseau):
     if valid:
         reseau.mdp = champ.valeur
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('Mot de passe enregistré...          ')
     else:
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('Retour au menu...                   ')
 
     return True

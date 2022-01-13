@@ -16,7 +16,14 @@ def services_parametres(minitel):
     minitel.position(4,7)
     minitel.couleur(caractere = 'bleu')
     minitel.envoyer('url :')
-    
+
+    # on affiche le pied de page
+    minitel.position(17,24)
+    minitel.couleur(caractere='vert')
+    minitel.envoyer('Retour au menu: ')
+    minitel.effet(inversion = True)
+    minitel.envoyer('SOMMAIRE')
+
     # on récupère l'url de l'annuaire
     annuaire = lire_annuaire()
     url = annuaire['url']
@@ -32,10 +39,12 @@ def services_parametres(minitel):
         annuaire['url'] = champ.valeur
         ecrire_annuaire(annuaire)
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('Url enregistré...            ')
     
     else:
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('Retour au menu...            ')
 
     return True

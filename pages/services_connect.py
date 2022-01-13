@@ -17,6 +17,7 @@ def services_connect(minitel, reseau, service):
     # on verifie que la connexion wifi est établie
     if not reseau.isconnected():
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('WiFi déconnecté !            ')
         return False
     
@@ -25,6 +26,7 @@ def services_connect(minitel, reseau, service):
         uri = service['address']
     except KeyError:
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('Adresse manquante !          ')
         return False
 
@@ -37,6 +39,7 @@ def services_connect(minitel, reseau, service):
     # on affiche les infos préalable
     minitel.efface('vraimenttout')
     minitel.position(1,0)
+    minitel.couleur(caractere='vert')
     minitel.envoyer('Connexion au serveur')
     minitel.position(6,8)
     minitel.envoyer('Appuyer sur')
@@ -57,12 +60,14 @@ def services_connect(minitel, reseau, service):
         data = minitel.recevoir(nbytes = 4)
         if data == '\x13I': # SHIFT + CONNEXION_FIN
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.effet(clignotement = True)
             minitel.envoyer('Connexion au serveur...')
             break
         elif data == '\x13F': # SOMMAIRE
             # retour menu
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Retour au menu...            ')
             return True
 
@@ -71,6 +76,7 @@ def services_connect(minitel, reseau, service):
         ws = reseau.ws_connect(uri, subprotocol)
     except OSError:
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('Echec de la connexion !      ')
         return False
 
@@ -110,7 +116,7 @@ def services_connect(minitel, reseau, service):
                 print('WS: received max_size')
                 continue
             else:
-                print('WS: received ' + str(len(data)))
+                print('WS: received ' + str(len(data)) + ' bytes')
                 new_frame = True
         else:
             new_frame = True
@@ -123,8 +129,9 @@ def services_connect(minitel, reseau, service):
                 break
             else:
                 ws.send(data)
-    
+
     minitel.position(1,0)
+    minitel.couleur(caractere='vert')
     minitel.envoyer('Déconnexion du service...        ')
 
     return True

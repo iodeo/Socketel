@@ -42,5 +42,6 @@ reseau = Reseau(parametres_reseau)
 item = 0
 while True:
     minitel.position(1,0)
+    minitel.couleur(caractere='vert')
     minitel.envoyer('Menu                              ')
     item = menu_principal(minitel, reseau, select = item)

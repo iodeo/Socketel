@@ -83,26 +83,32 @@ def menu_principal(minitel, reseau, select = 0):
         # on execute l'option selectionnée
         if menu.selection == 0:
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Minitel: Matériel')
             minitel_materiel(minitel) 
         elif menu.selection == 1:
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Minitel: Vitesse')
             minitel_vitesse(minitel)
         elif menu.selection == 2:
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Minitel: Paramètres')
             minitel_parametres(minitel)
         elif menu.selection == 7:
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Wifi: Choix du réseau')
             wifi_choixdureseau(minitel, reseau)
         elif menu.selection == 8:
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Wifi: Mot de passe')
             wifi_motdepasse(minitel, reseau)
         elif menu.selection == 9:
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Wifi: ')
             if reseau.isconnected():
                 minitel.envoyer('Deconnexion')
@@ -113,23 +119,28 @@ def menu_principal(minitel, reseau, select = 0):
                 reseau.connexion()
         elif menu.selection == 10:
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Wifi: Paramètres')
             wifi_parametres(minitel, reseau)
         elif menu.selection == 15:
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Services: Annuaire en ligne')
             services_annuaire(minitel, reseau)
         elif menu.selection == 16:
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Services: Annuaire personnel')
             services_personnel(minitel, reseau)
             #TODO ajout / retrait / connect
         elif menu.selection == 17:
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Services: Paramètres')
             services_parametres(minitel)
     else:
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('Sommaire...                     ')
 
     # on laisse le temps de lire le statut
@@ -141,6 +152,7 @@ def menu_principal(minitel, reseau, select = 0):
 
     # on réinitialise le statut
     minitel.position(1,0)
+    minitel.couleur(caractere='vert')
     minitel.envoyer('Menu                             ')
 
     return menu.selection

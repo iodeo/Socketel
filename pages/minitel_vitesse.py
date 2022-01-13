@@ -10,8 +10,15 @@ def minitel_vitesse(minitel):
     if minitel.capacite == CAPACITES_BASIQUES:
         minitel.identifier()
 
-    # on efface l'écran et on affiche le contenu
+    # on efface l'écran et on affiche le pied de page
     minitel.efface()
+    minitel.position(17,24)
+    minitel.couleur(caractere='vert')
+    minitel.envoyer('Retour au menu: ')
+    minitel.effet(inversion = True)
+    minitel.envoyer('SOMMAIRE')
+
+    # on affiche les titres et le contenu
     minitel.position(4, 4)
     minitel.couleur(caractere = 'bleu')
     minitel.effet(inversion=True)
@@ -52,25 +59,31 @@ def minitel_vitesse(minitel):
         # on définit le vitesse souhaitée
         if menu.selection == 0:
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Retour au menu...                   ')
         elif menu.selection == 1:
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Passage à 300 bps...                ')
             minitel.definir_vitesse(300)
         elif menu.selection == 2:
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Passage à 1200 bps...               ')
             minitel.definir_vitesse(1200)
         elif menu.selection == 3:
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Passage à 4800 bps...               ')
             minitel.definir_vitesse(4800)
         elif menu.selection == 4:
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Passage à 9600 bps...               ')
             minitel.definir_vitesse(9600)
     else:
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('Retour au menu...                   ')
         
     return True

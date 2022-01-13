@@ -36,6 +36,13 @@ def services_edit(minitel, service = None):
     minitel.effet(inversion=True)
     minitel.envoyer("Menu d'édition")
 
+    # on affiche le pied de page
+    minitel.position(17,24)
+    minitel.couleur(caractere='vert')
+    minitel.envoyer('Retour au menu: ')
+    minitel.effet(inversion = True)
+    minitel.envoyer('SOMMAIRE')
+
     # si aucun service n'est fourni on en crée un template
     if not service:
         service = {
@@ -88,6 +95,7 @@ def services_edit(minitel, service = None):
         if menu.selection == 0:
             # On enregistre le service
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Enregistrement du service...   ')
             # on récupère les paramètres
             service['name'] = champName.valeur
@@ -104,5 +112,6 @@ def services_edit(minitel, service = None):
 
     # sinon on retourne au menu
     minitel.position(1,0)
+    minitel.couleur(caractere='vert')
     minitel.envoyer('Retour au menu...            ')
     return True

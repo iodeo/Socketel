@@ -9,10 +9,17 @@ def minitel_materiel(minitel):
     minitel.couleur(caractere = 'bleu')
     minitel.effet(inversion=True)
     minitel.envoyer("Matériel détecté")
-    
+
+    # on affiche le pied de page
+    minitel.position(17,24)
+    minitel.couleur(caractere='vert')
+    minitel.envoyer('Retour au menu: ')
+    minitel.effet(inversion = True)
+    minitel.envoyer('SOMMAIRE')
+
     # on détecte le matériel en lisant la rom du minitel
     minitel.identifier()
-    
+
     # on affiche le résultat
     y = 6
     for ele in minitel.capacite:
@@ -27,6 +34,7 @@ def minitel_materiel(minitel):
     # on attend la saisie d'une touche clavier pour revenir au menu
     touche = minitel.recevoir_sequence()
     minitel.position(1,0)
-    minitel.envoyer('Retour au menu...')
+    minitel.couleur(caractere='vert')
+    minitel.envoyer('Retour au menu...        ')
 
     return True

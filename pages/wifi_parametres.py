@@ -26,6 +26,14 @@ def wifi_parametres(minitel, reseau):
     minitel.effet(inversion=True)
     minitel.envoyer("Supprimer le réseau sauvegardé ?")
 
+    # on affiche le pied de page
+    minitel.position(17,24)
+    minitel.couleur(caractere='vert')
+    minitel.envoyer('Retour au menu: ')
+    minitel.effet(inversion = True)
+    minitel.envoyer('SOMMAIRE')
+
+    # on prépare les options du menu
     options = [
         'Oui',    #0 - masquer
         'Non',    #1 - pas de masque
@@ -90,40 +98,47 @@ def wifi_parametres(minitel, reseau):
             parametres['masque_mdp'] = True
             reseau.masque_mdp = True
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Masquage mdp activé...')
 
         elif menu.selection == 1:
             parametres['masque_mdp'] = False
             reseau.masque_mdp = False
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Masquage mdp désactivé...')
 
         elif menu.selection == 5:
             parametres['auto'] = True
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Connexion auto activé...')
 
         elif menu.selection == 6:
             parametres['auto'] = False
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Connexion auto désactivé...')
 
         elif menu.selection == 10:
             parametres['nom'] = reseau.nom
             parametres['mdp'] = reseau.mdp
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Sauvegarde du reseau...')
 
         elif menu.selection == 15:
             parametres['nom'] = ''
             parametres['mdp'] = ''
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Suppression du reseau...')
 
         ecrire_reseau(parametres)
     
     else:
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('Retour au menu...                   ')
 
     return True

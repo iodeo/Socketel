@@ -14,6 +14,13 @@ def minitel_parametres(minitel):
     minitel.effet(inversion=True)
     minitel.envoyer("Vitesse par défaut au démarrage :")
 
+    # on affiche le pied de page
+    minitel.position(17,24)
+    minitel.couleur(caractere='vert')
+    minitel.envoyer('Retour au menu: ')
+    minitel.effet(inversion = True)
+    minitel.envoyer('SOMMAIRE')
+
     # on définit les options du menu
     options = [
         'Aucune',
@@ -28,14 +35,17 @@ def minitel_parametres(minitel):
         # on enregistre le choix
         if menu.selection == 0:
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Vitesse auto désactivé')
             ecrire_vitesse({'auto': False, 'vitesse': 1200})
         elif menu.selection == 1:
             minitel.position(1,0)
+            minitel.couleur(caractere='vert')
             minitel.envoyer('Vitesse auto à ' + str(minitel.vitesse) + ' bps')
             ecrire_vitesse({'auto': True, 'vitesse': minitel.vitesse})
     else:
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('Retour au menu...            ')
     
     return True

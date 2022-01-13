@@ -64,6 +64,7 @@ def services_personnel(minitel, reseau):
             choix = services_consult(minitel, annuaire[menu.selection], local = True)
         elif menu.selection == len(options)-2:
                 minitel.position(1,0)
+                minitel.couleur(caractere='vert')
                 minitel.envoyer('Edition de service           ')
                 services_edit(minitel)
                 return True
@@ -80,16 +81,19 @@ def services_personnel(minitel, reseau):
     elif choix == 1:
         # Editer service
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('Edition de service           ')
         services_edit(minitel, annuaire[menu.selection])
     elif choix == 2:
         # Supprimer service
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('Suppression du service...    ')
         supprimer_service(annuaire[menu.selection]['id'])
     elif choix == 3:
         # Retour menu
         minitel.position(1,0)
+        minitel.couleur(caractere='vert')
         minitel.envoyer('Retour au menu...            ')
 
     return True

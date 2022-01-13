@@ -240,7 +240,7 @@ class Websocket:
             print('WS_SEND: send OP_TEXT: ' + buf.decode())
         elif isinstance(buf, bytes):
             opcode = OP_BYTES
-            print('WS_SEND: send OP_BYTES: ' + buf)
+            print('WS_SEND: send OP_BYTES: ' + buf.decode())
         else:
             raise TypeError()
 
