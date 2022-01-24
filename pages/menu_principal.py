@@ -116,7 +116,13 @@ def menu_principal(minitel, reseau, select = 0):
             else:
                 minitel.effet(clignotement = True)
                 minitel.envoyer('Connexion')
-                reseau.connexion()
+                minitel.position(1,0)
+                minitel.couleur(caractere='vert')
+                if reseau.connexion():
+                   minitel.envoyer('Connexion établie')
+                else:
+                    minitel.envoyer('Echec de la connexion')
+                    minitel.bip()
         elif menu.selection == 10:
             minitel.position(1,0)
             minitel.couleur(caractere='vert')
