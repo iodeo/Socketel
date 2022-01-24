@@ -55,6 +55,8 @@ def wifi_choixdureseau(minitel, reseau):
         minitel.couleur(caractere = 'bleu')
         minitel.envoyer(str(ele[3]))
         y = y + 1
+        if y >= 24:
+            break
 
     # On identifie le réseau actuel
     i = 0
