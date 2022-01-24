@@ -19,6 +19,7 @@ def services_connect(minitel, reseau, service):
         minitel.position(1,0)
         minitel.couleur(caractere='vert')
         minitel.envoyer('WiFi déconnecté !            ')
+        minitel.bip()
         return False
     
     # on verifie qu'on a bien une adresse de service
@@ -28,6 +29,7 @@ def services_connect(minitel, reseau, service):
         minitel.position(1,0)
         minitel.couleur(caractere='vert')
         minitel.envoyer('Adresse manquante !          ')
+        minitel.bip()
         return False
 
     # s'il n'y a pas de subprotocol, on met None
@@ -78,6 +80,7 @@ def services_connect(minitel, reseau, service):
         minitel.position(1,0)
         minitel.couleur(caractere='vert')
         minitel.envoyer('Echec de la connexion !      ')
+        minitel.bip()
         return False
 
     # on efface l'écran et on laisse place au service
