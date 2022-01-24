@@ -86,6 +86,7 @@ class Reseau:
             try:
                 self.wlan.connect(self.nom, self.mdp)
             except OSError:
+                self.wlan.active(False)
                 return False
             
             start_ms = time.ticks_ms()
@@ -95,6 +96,7 @@ class Reseau:
                     break
                 
             if not self.isconnected():
+                self.wlan.active(False)
                 return False
         
         return True
