@@ -1,1 +1,1 @@
-{"auto": false, "nom": "mySsid", "masque_mdp": true, "mdp": "myPassword", "timeout_ms": 10000}
+{"auto": false, "nom": "mySsid", "masque_mdp": false, "mdp": "myPassword", "timeout_ms": 10000}
