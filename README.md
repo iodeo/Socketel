@@ -2,6 +2,10 @@
 
 Portal to minitel webservices written in micropython for ESP32 microcontroller.
 
+Important note :
+Works with micropython v1.17 and v1.18
+Not working with v1.19
+
 # What is this ?
 
 Minitel services have been officialy terminated in 2012, making these robust terminals only good to be added to our mountains of electronics rubbish. But this was without counting on some amazing guys who have put online their own minitel services using voip and/or websockets. Thanks to them, anyone with a working minitel terminal (which is not so rare in french house attic), can still try the minitel experience !
