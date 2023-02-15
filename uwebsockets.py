@@ -111,7 +111,7 @@ class Websocket:
             length, = struct.unpack('!H', self.sock.read(2))
         elif length == 127:  # Magic number, length header is 8 bytes
             length, = struct.unpack('!Q', self.sock.read(8))
-        
+
         if mask:  # Mask is 4 bytes
             mask_bits = self.sock.read(4)
 
@@ -255,7 +255,10 @@ class Websocket:
 
         buf = struct.pack('!H', code) + reason.encode('utf-8')
 
-        self.write_frame(OP_CLOSE, buf)
+        try:
+            self.write_frame(OP_CLOSE, buf)
+        except:
+            pass
         self._close()
 
     def _close(self):
