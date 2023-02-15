@@ -25,17 +25,16 @@ minitel.definir_mode('VIDEOTEX')
 minitel.efface('vraimenttout')
 minitel.curseur(False)
 
-# on affiche l'ecran d'accueil de l'application
-accueil(minitel)
-
 # on récupère les paramètres réseau et on affiche le message
 # de connexion automatique le cas échéant
 parametres_reseau = lire_reseau()
 if parametres_reseau['auto']:
+    accueil(minitel, attendre=False)
     minitel.position(1,0)
     minitel.envoyer('Connexion automatique ...')
     item = 16
 else:
+    accueil(minitel)
     item = 0
 
 # on définit l'objet utilisé pour les opérations de réseau
