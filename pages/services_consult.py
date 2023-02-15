@@ -1,16 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """Module de consultation des paramètres d'un service
-    
+
 """
 
 from minitel.ui.Menu import Menu
+# ~ from parametres import (lire_annuaire_personnel, supprimer_service)
+from parametres import supprimer_service, ajouter_service
+from pages.services_connect import services_connect
+from pages.services_edit import services_edit
 
-def services_consult(minitel, service, local = False):
+def services_consult(minitel, service, reseau, local = False):
     """Permet d'afficher les paramètres d'un service et de l'ajouter,
     l'éditer ou le supprimer suivant qu'il se trouve dans l'annuaire
     en ligne ou dans l'annuaire personnel
-    
+
     *param local*
         Vrai si on est dans l'annuaire personnel, Faux si on est dans
         l'annuaire en ligne
@@ -19,9 +23,9 @@ def services_consult(minitel, service, local = False):
 
         returns:
             True
-            
+
     """
-    
+
     # on efface l'écran et on affiche le titre
     minitel.efface()
     minitel.position(4, 4)
@@ -49,7 +53,7 @@ def services_consult(minitel, service, local = False):
     minitel.couleur(caractere = 'bleu')
     minitel.effet(inversion=True)
     minitel.envoyer("Menu du service")
-    
+
     # On crée le contenu du menu en fonction de l'annuaire courant
     if local:
         options = [
@@ -64,17 +68,51 @@ def services_consult(minitel, service, local = False):
             "Ajouter dans l'annuaire personnel",
             "Retourner au menu"
         ]
-    
+
     # On affiche le menu
     menu = Menu(minitel, options, 6, y+1, grille = False)
     menu.affiche()
-    
+
     if menu.executer():
-        # On renvoit la sélection
-        return menu.selection
+        try:
+            # On renvoit la sélection
+            # ~ return menu.selection
+            # on execute la tâche choisie dans le sous-menu services_consult
+            if menu.selection == 0:
+                # Consulter service
+                services_connect(minitel, reseau, service)
+
+                # Après la connexion, remettre deux trois trucs en ordre...
+                minitel.configurer_clavier(etendu = True, curseur = False, minuscule = True)
+                minitel.echo(False)
+                minitel.curseur(False)
+
+            elif menu.selection == 1:
+                # Editer service
+                minitel.position(1,0)
+                minitel.couleur(caractere='vert')
+                if local:
+                    minitel.envoyer('Edition de service           ')
+                    services_edit(minitel, service)
+                else:
+                    minitel.envoyer('Ajout du service...          ')
+                    ajouter_service(service)
+
+            elif menu.selection == 2 and local:
+                # Supprimer service
+                minitel.position(1,0)
+                minitel.couleur(caractere='vert')
+                minitel.envoyer('Suppression du service...    ')
+                supprimer_service(service['id'])
+            elif menu.selection == 2 or menu.selection == 3:
+                # Retour menu
+                minitel.position(1,0)
+                minitel.couleur(caractere='vert')
+                minitel.envoyer('Retour au menu...            ')
+
+        except Exception as e:
+            minitel.position(1,0)
+            minitel.envoyer('ERREUR '+str(e))
+
     else:
-        # On force le retour menu
-        if local:
-            return 3
-        else:
-            return 2
+        return True
