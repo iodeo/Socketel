@@ -34,12 +34,14 @@ parametres_reseau = lire_reseau()
 if parametres_reseau['auto']:
     minitel.position(1,0)
     minitel.envoyer('Connexion automatique ...')
+    item = 16
+else:
+    item = 0
 
 # on définit l'objet utilisé pour les opérations de réseau
 reseau = Reseau(parametres_reseau)
 
 # on affiche le menu principal
-item = 0
 while True:
     minitel.position(1,0)
     minitel.couleur(caractere='vert')
