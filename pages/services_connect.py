@@ -21,7 +21,7 @@ def services_connect(minitel, reseau, service):
         minitel.envoyer('WiFi déconnecté !            ')
         minitel.bip()
         return False
-    
+
     # on verifie qu'on a bien une adresse de service
     try:
         uri = service['address']
@@ -37,7 +37,7 @@ def services_connect(minitel, reseau, service):
         subprotocol = service['subprotocol']
     else:
         subprotocol = None
-        
+
     # on affiche les infos préalable
     minitel.efface('vraimenttout')
     minitel.position(1,0)
@@ -53,25 +53,14 @@ def services_connect(minitel, reseau, service):
     minitel.effet(inversion = True)
     minitel.envoyer('ConnexionFin')
     minitel.position(6,12)
-    minitel.envoyer('Pour démarrer la connexion')
+    minitel.envoyer('Pour mettre fin à la ')
     minitel.position(6,13)
-    minitel.envoyer('et y mettre fin à tout moment')
-    
-    # on attends la touche de connexion
-    while True:
-        data = minitel.recevoir(nbytes = 4)
-        if data == '\x13I': # SHIFT + CONNEXION_FIN
-            minitel.position(1,0)
-            minitel.couleur(caractere='vert')
-            minitel.effet(clignotement = True)
-            minitel.envoyer('Connexion au serveur...')
-            break
-        elif data == '\x13F': # SOMMAIRE
-            # retour menu
-            minitel.position(1,0)
-            minitel.couleur(caractere='vert')
-            minitel.envoyer('Retour au menu...            ')
-            return True
+    minitel.envoyer('connexion à tout moment ')
+
+    minitel.position(1,0)
+    minitel.couleur(caractere='vert')
+    minitel.effet(clignotement = True)
+    minitel.envoyer('Connexion au serveur...')
 
     # on essaye de se connecter
     try:
@@ -86,7 +75,7 @@ def services_connect(minitel, reseau, service):
     # on efface l'écran et on laisse place au service
     minitel.efface('vraimenttout')
     minitel.configurer_clavier()
-    
+
     # uwebsockets ne supportant pas la modification de la taille du buffer,
     # on reboucle manuellement la lecture du websocket en bypassant l'analyse
     # de l'en-tête de la trame (MemoryError observé pour size > 5000)
@@ -94,11 +83,11 @@ def services_connect(minitel, reseau, service):
     new_frame = True
 
     while True:
-        
+
         # on nettoie la mémoire
         data = None
         gc.collect()
-        
+
         # websocket > minitel
         try:
             if new_frame:
