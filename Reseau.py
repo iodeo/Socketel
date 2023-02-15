@@ -23,7 +23,7 @@ class Reseau:
     """
     def __init__(self, params = None):
         """Constructeur de la classe Reseau
-        
+
         :param params:
             dictionnaire incluant 'nom', 'mdp', 'auto' et 'timeout_ms'
         :type params:
@@ -35,15 +35,15 @@ class Reseau:
         :type auto:
             booléen
         :type timeout_ms:
-            int            
+            int
         """
-        
+
         # Initialisation des attributs
         # nom: ssid du réseau
         # mdp: mot de passe du réseau
         # auto: connexion automatique à la déclaration d'un objet Reseau
         # timeout_ms: timeout lors d'une tentative de connexion
-        
+
         if params:
             self.nom = params['nom']
             self.mdp = params['mdp']
@@ -72,33 +72,56 @@ class Reseau:
         returns:
             False si la connexion a échouée
             True si la connexion est établie
-            
+
         """
-        
+
         assert isinstance(self.nom, str)
         assert isinstance(self.mdp, str)
         assert isinstance(self.timeout_ms, int)
-        
+
         if not self.wlan.active():
             self.wlan.active(True)
-        
+            self.wlan.ifconfig('dhcp')
+
         if not self.isconnected():
             try:
                 self.wlan.connect(self.nom, self.mdp)
             except OSError:
                 self.wlan.active(False)
                 return False
-            
+
             start_ms = time.ticks_ms()
             while not self.isconnected():
                 time_ms = time.ticks_diff(time.ticks_ms(), start_ms)
                 if  time_ms > self.timeout_ms:
                     break
-                
+
+            ifconfigdata = self.wlan.ifconfig()
+            print(ifconfigdata)
+
             if not self.isconnected():
                 self.wlan.active(False)
                 return False
-        
+
+            # now disconnect, disabling DHCP, and reconnect. grr grr grr.
+            self.wlan.disconnect()
+            self.wlan.ifconfig(ifconfigdata)
+            try:
+                self.wlan.connect(self.nom, self.mdp)
+            except OSError:
+                self.wlan.active(False)
+                return False
+
+            start_ms = time.ticks_ms()
+            while not self.isconnected():
+                time_ms = time.ticks_diff(time.ticks_ms(), start_ms)
+                if  time_ms > self.timeout_ms:
+                    break
+
+            if not self.isconnected():
+                self.wlan.active(False)
+                return False
+
         return True
 
     def deconnexion(self):
@@ -114,7 +137,7 @@ class Reseau:
     def scan(self):
         if not self.wlan.active():
             self.wlan.active(True)
-            
+
         return self.wlan.scan()
 
     def get(self, url):
