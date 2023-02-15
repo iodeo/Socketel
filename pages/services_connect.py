@@ -65,10 +65,11 @@ def services_connect(minitel, reseau, service):
     # on essaye de se connecter
     try:
         ws = reseau.ws_connect(uri, subprotocol)
-    except OSError:
+    except Exception as e:
         minitel.position(1,0)
+        minitel.effet(clignotement = False)
         minitel.couleur(caractere='vert')
-        minitel.envoyer('Echec de la connexion !      ')
+        minitel.envoyer(str(e)+'                      ')
         minitel.bip()
         return False
 
@@ -96,10 +97,15 @@ def services_connect(minitel, reseau, service):
             else:
                 # on bypass l'analyse de frame websocket si le msg n'a pas été lu en entier
                 data = ws.sock.read(buffer_size)
-        except:
+        except Exception as e:
             print('WS: unable to read frame. websocket is closed')
+            minitel.position(1,0)
+            minitel.couleur(caractere='vert')
+            minitel.envoyer('Connection terminated by remote host '+str(e))
+            minitel.bip()
             ws.close()
-            break
+            return False
+
         if data:
             minitel.envoyer_brut(data)
             if len(data) == buffer_size:
@@ -118,12 +124,9 @@ def services_connect(minitel, reseau, service):
         if data:
             if data == '\x13I': # SHIFT + CONNEXION_FIN
                 ws.close()
-                break
+                minitel.position(1,0)
+                minitel.couleur(caractere='vert')
+                minitel.envoyer('Déconnexion du service...')
+                return True
             else:
                 ws.send(data)
-
-    minitel.position(1,0)
-    minitel.couleur(caractere='vert')
-    minitel.envoyer('Déconnexion du service...        ')
-
-    return True
