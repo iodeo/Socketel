@@ -82,7 +82,7 @@ class Minitel:
     Le cycle de vie d’un objet Minitel consiste en la création, la
     détermination de la vitesse du Minitel, de ses capacités, l’utilisation
     du Minitel par l’application et la libération des ressources::
-        
+
         from minitel.Minitel import Minitel
 
         minitel = Minitel()
@@ -112,7 +112,7 @@ class Minitel:
             Le port uart utilisé. Par défaut, le port 2 de l'ESP32 est utilisé
         :type uart_num:
             Integer
-    
+
         """
         assert isinstance(uart_num, int)
         self.uart_num = uart_num
@@ -146,7 +146,7 @@ class Minitel:
         self._minitel.write(byte)
 
     def envoyer(self, contenu):
-        """Envoi de séquence de caractères 
+        """Envoi de séquence de caractères
 
         Envoie une séquence de caractère en direction du Minitel.
 
@@ -179,10 +179,10 @@ class Minitel:
             attente en secondes, valeurs en dessous de la seconde
             acceptées. Valide uniquement en mode bloque = True
             Si attente = None et bloque = True, alors on attend
-            indéfiniment qu'un caractère arrive. 
+            indéfiniment qu'un caractère arrive.
         :type attente:
             un entier, ou None
-        
+
         :param nbytes:
             nombre de byte à lire au maximum
         """
@@ -235,7 +235,7 @@ class Minitel:
             attente en secondes, valeurs en dessous de la seconde
             acceptées. Valide uniquement en mode bloque = True
             Si attente = None et bloque = True, alors on attend
-            indéfiniment qu'un caractère arrive. 
+            indéfiniment qu'un caractère arrive.
         :type attente:
             un entier, ou None
 
@@ -459,9 +459,11 @@ class Minitel:
         laquelle le Minitel est réglé.
 
         Pour effectuer la détection, la méthode deviner_vitesse va tester les
-        vitesses 9600 bps, 4800 bps, 1200 bps et 300 bps (dans cet ordre) et
+        vitesses 1200 bps, 9600 bps, 4800 bps et 300 bps (dans cet ordre) et
         envoyer à chaque fois une commande PRO1 de demande de statut terminal.
         Si le Minitel répond par un acquittement PRO2, on a détecté la vitesse.
+        (ordre modifié pour gagner de la vitesse sur un minitel par défaut en
+        1200 bps après allumage)
 
         En cas de détection, la vitesse est enregistré dans l’attribut vitesse
         de l’objet.
@@ -471,22 +473,22 @@ class Minitel:
             n’a pas pu être déterminée.
         """
         # Vitesses possibles jusqu’au Minitel 2
-        vitesses = [9600, 4800, 1200, 300]
+        vitesses = [1200, 9600, 4800, 300]
 
         for vitesse in vitesses:
             # Configure le port série à la vitesse à tester
             self._minitel.deinit()
             self._minitel = UART(
                 self.uart_num,
-                baudrate = vitesse, # vitesse à 1200 bps, le standard Minitel
+                baudrate = vitesse, # vitesse (1200 bps = Minitel par défaut)
                 bits = 7,           # taille de caractère à 7 bits
                 parity = 0,         # parité paire
                 stop = 1,           # 1 bit d’arrêt
                 timeout = 1,        # 1s de timeout
                 timeout_char = 1,   # 1s de timeout entre caracteres
-                flow   = 0          # pas de contrôle matériel
+                flow = 0            # pas de contrôle matériel
             )
-
+            print("deviner_vitesse: Trying %d bps" % (vitesse))
 
             # Envoie une demande de statut terminal
             retour = self.appeler([PRO1, STATUS_TERMINAL], LONGUEUR_PRO2)
@@ -498,8 +500,9 @@ class Minitel:
                     return vitesse
 
         # La vitesse n’a pas été trouvée
+        print("deviner_vitesse FAILED!")
         return -1
-    
+
     def recuperation(self):
         """Tente de réactiver le langage protocole en ramenant au mode VIDEOTEX
 
@@ -521,7 +524,7 @@ class Minitel:
         """
         # Vitesses possibles jusqu’au Minitel 2
         vitesses = [9600, 4800, 1200, 300]
-        
+
         # On suppose que le Minitel est en mode Téléinformatique
         self.mode = 'TELEINFORMATIQUE'
 
@@ -538,6 +541,7 @@ class Minitel:
                 timeout_char = 1,   # 1s de timeout entre caracteres
                 flow   = 0          # pas de contrôle matériel
             )
+            print("recuperation: Trying %d bps" % (vitesse))
 
 
             # Envoie la demande de passage en mode VIDEOTEX
@@ -552,7 +556,7 @@ class Minitel:
 
         # La vitesse n’a pas été trouvée
         return -1
-    
+
 
     def definir_vitesse(self, vitesse):
         """Programme le Minitel et le port série pour une vitesse donnée.
@@ -680,7 +684,7 @@ class Minitel:
         """Définit les couleurs utilisées pour les prochains caractères.
 
         Les couleurs possibles sont noir, rouge, vert, jaune, bleu, magenta,
-        cyan, blanc et un niveau de gris de 0 à 7.        
+        cyan, blanc et un niveau de gris de 0 à 7.
 
         Note:
         En Videotex, la couleur de fond ne s’applique qu’aux délimiteurs. Ces
@@ -908,7 +912,7 @@ class Minitel:
             False: [PRO3, AIGUILLAGE_OFF, RCPT_MODEM, EMET_CLAVIER]
         }
         retour = self.appeler(actifs[actif], LONGUEUR_PRO3)
-        
+
         return retour.longueur == LONGUEUR_PRO3
 
     def efface(self, portee = 'tout'):
@@ -987,7 +991,7 @@ class Minitel:
         En spécifiant un nombre de colonnes, cette méthode supprime des
         caractères après le curseur, le Minitel ramène les derniers caractères
         contenus sur la ligne.
-        
+
         En spécifiant un nombre de lignes, cette méthode supprime des lignes
         sous la ligne contenant le curseur, remontant les lignes suivantes.
 
@@ -1062,7 +1066,7 @@ class Minitel:
         simplement ignoré. Cette particularité permet de dessiner les
         caractères depuis un éditeur de texte standard et d’ajouter des
         commentaires.
-        
+
         Exemple::
 
             11111111
