@@ -98,12 +98,15 @@ def services_connect(minitel, reseau, service):
                 # on bypass l'analyse de frame websocket si le msg n'a pas été lu en entier
                 data = ws.sock.read(buffer_size)
         except Exception as e:
+            print('WS: '+str(e))
             print('WS: unable to read frame. websocket is closed')
             minitel.position(1,0)
             minitel.couleur(caractere='vert')
-            minitel.envoyer('Connection terminated by remote host '+str(e))
+            minitel.envoyer('Connection terminated by remote host   ')
             minitel.bip()
             ws.close()
+            minitel.recevoir(nbytes = 1, bloque=True)
+            minitel.efface('vraimenttout')
             return False
 
         if data:
