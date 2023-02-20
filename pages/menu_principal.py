@@ -65,7 +65,7 @@ def menu_principal(minitel, reseau, select = 0):
         'Annuaire personnel', #16
         'Paramètres'          #17
     ]
-    
+
     # on adapte l'option Connexion / Deconnexion en fonction
     # de l'état actuel
     if reseau.isconnected():
@@ -77,15 +77,15 @@ def menu_principal(minitel, reseau, select = 0):
     menu = Menu(minitel, options, 6, 4, grille = False,
                 selection = select)
     menu.affiche()
-    
+
     if menu.executer():
-        
+
         # on execute l'option selectionnée
         if menu.selection == 0:
             minitel.position(1,0)
             minitel.couleur(caractere='vert')
             minitel.envoyer('Minitel: Matériel')
-            minitel_materiel(minitel) 
+            minitel_materiel(minitel)
         elif menu.selection == 1:
             minitel.position(1,0)
             minitel.couleur(caractere='vert')
@@ -148,13 +148,6 @@ def menu_principal(minitel, reseau, select = 0):
         minitel.position(1,0)
         minitel.couleur(caractere='vert')
         minitel.envoyer('Sommaire...                     ')
-
-    # on laisse le temps de lire le statut
-    start_ms = time.ticks_ms()
-    while True:
-        time_ms = time.ticks_diff(time.ticks_ms(), start_ms)
-        if  time_ms > 1000:
-            break
 
     # on réinitialise le statut
     minitel.position(1,0)
