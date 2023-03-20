@@ -5,9 +5,9 @@
 """
 
 from minitel.ui.Menu import Menu
-from parametres import lire_annuaire_url, ajouter_service
+
+from parametres import lire_annuaire_url #, ajouter_service
 from pages.services_consult import services_consult
-from pages.services_connect import services_connect
 
 def services_annuaire(minitel, reseau):
     """Affiche la liste des services présents dans l'annuaire en ligne
@@ -16,7 +16,7 @@ def services_annuaire(minitel, reseau):
 
         returns:
             True
-    
+
     """
 
     # On efface l'ecran et affiche le titre
@@ -44,9 +44,7 @@ def services_annuaire(minitel, reseau):
     # on affiche les soustitres
     minitel.position(6, 6)
     minitel.couleur(caractere = 'bleu')
-    if annuaire:
-        minitel.envoyer("*Nom")
-    else:
+    if not annuaire:
         minitel.envoyer("Aucun service")
     minitel.position(4, 9 + len(annuaire))
     minitel.couleur(caractere = 'bleu')
@@ -69,35 +67,11 @@ def services_annuaire(minitel, reseau):
     if not annuaire:
         selection = menu.option_suivante(0)
         menu.change_selection(selection)
-    
+
     if menu.executer():
         if menu.selection < len(options)-1:
+            service = menu.selection
             # Voir les paramètres du service selectionné
-            choix = services_consult(minitel, annuaire[menu.selection])
-        else:
-            # Retour menu
-            choix = 2
+            services_consult(minitel, annuaire[menu.selection], reseau)
     else:
-        # Retour menu
-        choix = 2
-
-    # on execute la tâche choisie
-    if choix == 0:
-        # Se connecter au service
-        services_connect(minitel, reseau, annuaire[menu.selection])
-        minitel.position(1,0)
-        minitel.couleur(caractere='vert')
-        minitel.envoyer('Déconnexion du service...    ')
-    elif choix == 1:
-        # Ajouter service dans l'annuaire personnel
-        minitel.position(1,0)
-        minitel.couleur(caractere='vert')
-        minitel.envoyer('Ajout du service...          ')
-        ajouter_service(annuaire[menu.selection])
-    elif choix == 2:
-        # Retourner menu
-        minitel.position(1,0)
-        minitel.couleur(caractere='vert')
-        minitel.envoyer('Retour au menu...            ')
-
-    return True
+        return True
